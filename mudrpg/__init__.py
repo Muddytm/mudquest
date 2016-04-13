@@ -1,0 +1,1 @@
+from mudrpg.main import *
