@@ -39,3 +39,5 @@ async def run(client, message):
 
         if data["gamestate"] == "new_or_load":
             new_or_load.main(client, message, data)
+        elif data["gamestate"] == "battle":
+            battle.main(client, message, data)

@@ -9,7 +9,13 @@ async def main(client, message, data):
 
     # !mudrpg new
     if msg == "new":
-        # TODO: put stuff here
         data["gamestate"] = "battle"
+        with open("mudrpg/game_data.json", "w+") as file:
+            json.dump(data, file)
+
+        data["session"][message.author.name]
+        await client.send_message(message.channel, "Your class is: simpleton")
+
+    # !mudrpg load
     elif msg == "load":
         pass
