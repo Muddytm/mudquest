@@ -1,8 +1,11 @@
 import discord
 import json
 
+import new_or_load
+
 
 async def run(client, message):
+    """Hub of actions for MudRPG."""
     msg = message.content.replace("!mudrpg", "").strip()
     data_loc = "mudrpg/game_data.json"
 
@@ -18,17 +21,15 @@ async def run(client, message):
 
     if data["running"]:
         # !mudrpg end
-        elif msg == "end":
+        if msg == "end session":
             await client.send_message(message.channel, goodbye())
 
             data["running"] = False
             with open(data_loc, "w+") as file:
                 json.dump(data, file)
+
         if data["gamestate"] == "new_or_load":
-            # !mudrpg new
-            elif msg == "new" and data["gamestate"] == "new_or_load":
-                #TODO: put stuff here
-                pass
+            new_or_load.main(client, message)
 
 
 def welcome():
