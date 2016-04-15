@@ -1,7 +1,8 @@
 import discord
 import json
 
-import new_or_load
+from mudrpg import battle
+from mudrpg import new_or_load
 
 
 def welcome():
@@ -20,6 +21,17 @@ async def run(client, message):
 
     data = json.load(open(data_loc, "r"))
 
+    # !mudrpg erasealldata
+    # Resets data in game_data.json
+    if msg == "erasealldata":
+        data["gamestate"] = "new_or_load"
+        data["session"] = {}
+        data["turn"] = None
+        data["running"] = False
+        with open(data_loc, "w+") as file:
+            json.dump(data, file)
+        return
+
     # !mudrpg start
     if msg == "start" and not data["running"]:
         await client.send_message(message.channel, welcome())
@@ -32,12 +44,12 @@ async def run(client, message):
         # !mudrpg end
         if msg == "exit":
             await client.send_message(message.channel, goodbye())
-
             data["running"] = False
             with open(data_loc, "w+") as file:
                 json.dump(data, file)
+            return
 
         if data["gamestate"] == "new_or_load":
-            new_or_load.main(client, message, data)
+            await new_or_load.main(client, message, data)
         elif data["gamestate"] == "battle":
-            battle.main(client, message, data)
+            await battle.main(client, message, data)

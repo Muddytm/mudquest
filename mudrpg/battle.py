@@ -2,7 +2,7 @@
 
 
 import discord
-import enemies
+from mudrpg.enemies.Skellyton import Skellyton
 import json
 
 
@@ -16,14 +16,17 @@ def make_enemy(enemy, data):
 
 async def main(client, message, data):
     """Hub of actions for turn-based battle."""
+
+    msg = message.content.replace("!mudrpg", "").strip()
+
     if "enemy" not in data:
-        make_enemy(enemies.Skellyton, data)
+        make_enemy(Skellyton(), data)
 
     if "enemy" in data:
-        if message.content == "name":
+        if msg == "name":
             await client.send_message(message.channel, data["enemy"]["name"])
-        elif message.content == "description"
+        elif msg == "description":
             await client.send_message(message.channel,
                                       data["enemy"]["description"])
-        elif message.content == "HP"
+        elif msg == "HP":
             await client.send_message(message.channel, str(data["enemy"]["HP"]))

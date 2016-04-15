@@ -1,3 +1,5 @@
 mudrpg/*.pyc
 mudrpg/__pycache__
-
+mudrpg/enemies/__pycache__
+mudrpg/classes/__pycache__
+mudrpg/places/__pycache__
