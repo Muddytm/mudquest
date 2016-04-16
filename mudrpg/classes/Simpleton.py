@@ -18,4 +18,4 @@ class Simpleton:
             text = ("You throw a punch!")
             damage = 5
             miss_chance = 25
-            return (text, damage, 0, 0, miss_chance)
+            return [text, damage, 0, 0, miss_chance]
