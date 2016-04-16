@@ -10,7 +10,7 @@ class Simpleton:
                             "where originality is nonexistant.")
         self.HP = 20
 
-    def act(action):
+    def act(self, action):
         """Perform an action.
 
         return: (text, damage, self_damage, self_heal, miss_chance)"""

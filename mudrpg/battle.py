@@ -29,6 +29,7 @@ async def main(client, message, data):
     """Hub of actions for turn-based battle."""
 
     msg = message.content.replace("!mudrpg", "").strip()
+    data_loc = "mudrpg/game_data.json"
 
     if "enemy" not in data:
         make_enemy(Skellyton(), data)
@@ -58,7 +59,7 @@ async def main(client, message, data):
                     dmg_text = (data["enemy"]["name"] + " took "
                                 "" + str(ability_data[1]) + " damage!")
                     hp_text = (data["enemy"]["name"] + " now has "
-                               "" + data["enemy"]["HP"] + " HP.")
+                               "" + str(data["enemy"]["HP"]) + " HP.")
                     await client.send_message(message.channel, dmg_text)
                     await client.send_message(message.channel, hp_text)
 
