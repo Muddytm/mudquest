@@ -6,7 +6,7 @@ import json
 
 class Menu:
 
-    async def main(Game, client, message):
+    async def main(self, Game, client, message):
         """Hub of actions for new_or_load gamestate."""
 
         msg = message.content
@@ -15,7 +15,7 @@ class Menu:
         if msg == "new":
             Game.state = "battle"
             Game.name = message.author.name
-            Game.class = "simpleton"
+            Game.path = "simpleton"
 
             await client.send_message(message.channel, "Your class is: simpleton")
 

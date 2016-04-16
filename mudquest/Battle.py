@@ -10,7 +10,7 @@ from mudquest.enemies.Skellyton import Skellyton
 
 class Battle:
 
-    def make_enemy(enemy, data):
+    def make_enemy(self, enemy, Game):
         """Populate enemy dict with enemy data."""
         Game.enemy["name"] = enemy.name
         Game.enemy["description"] = enemy.description
@@ -18,24 +18,25 @@ class Battle:
         Game.enemy["HP"] = enemy.HP
 
 
-    def make_hero(hero, data):
+    def make_hero(self, hero, Game):
         """Populate enemy dict with enemy data."""
         Game.hero["name"] = hero.name
         Game.hero["description"] = hero.description
         Game.hero["HP"] = hero.HP
 
 
-    async def main(Game, client, message):
+    async def main(self, Game, client, message):
         """Hub of actions for turn-based battle."""
 
         msg = message.content
 
-        if Game.enemy == {}
-            make_enemy(Skellyton(), Game)
-            await client.send_message(message.channel, Game)
+        if Game.enemy == {}:
+            self.make_enemy(Skellyton(), Game)
+            await client.send_message(message.channel,
+                                      Game.enemy["battle_text"])
 
         if Game.hero == {}:
-            make_hero(Simpleton(), Game)
+            self.make_hero(Simpleton(), Game)
 
         Game.turn = "hero"
 

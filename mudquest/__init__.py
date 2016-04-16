@@ -1,1 +1,1 @@
-from mudrpg.main import *
+from mudquest.Game import *

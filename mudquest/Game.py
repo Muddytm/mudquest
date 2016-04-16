@@ -1,8 +1,8 @@
 import discord
 import json
 
-from mudrpg import battle
-from mudrpg import new_or_load
+from mudquest.Battle import Battle
+from mudquest.Menu import Menu
 
 
 class Game:
@@ -11,16 +11,16 @@ class Game:
         self.state = "menu"
         self.running = False
         self.name = None
-        self.class = None
+        self.path = None
         self.enemy = {}
         self.hero = {}
         self.turn = None
 
-    def welcome():
+    def welcome(self):
         return ("Welcome to MudQuest! Type \"new\" to start a new session, "
                 " \"load\" to continue, or \"exit\" to exit.")
 
-    def goodbye():
+    def goodbye(self):
         return ("MudQuest session has ended. Buh-bye!")
 
     async def run(self, client, message):
@@ -28,17 +28,17 @@ class Game:
         msg = message.content
 
         if not self.running and msg == "start":
-            await client.send_message(message.channel, welcome())
+            await client.send_message(message.channel, self.welcome())
             self.running = True
 
         if self.running:
             if msg == "exit":
-                await client.send_message(message.channel, goodbye())
+                await client.send_message(message.channel, self.goodbye())
                 self.running = False
                 return
 
             if self.state == "menu":
-                await menu.main(self, client, message)
+                await Menu().main(self, client, message)
 
             if self.state == "battle":
-                await battle.main(self, client, message)
+                await Battle().main(self, client, message)
