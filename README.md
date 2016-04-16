@@ -1,4 +1,4 @@
-# mudrpg
+# mudquest
 A text-based RPG to play with your group of friends. Made for Discord.
 
 V0.1 coming soon. Features:
