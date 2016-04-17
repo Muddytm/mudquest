@@ -49,7 +49,7 @@ class Battle:
                 await client.send_message(message.channel, text)
                 text = ("Lore: " + Game.enemy["description"])
                 await client.send_message(message.channel, text)
-                text = ("HP: " + Game.enemy["HP"])
+                text = ("HP: " + str(Game.enemy["HP"]))
                 await client.send_message(message.channel, text)
                 text = ("Moves: " + str(Game.enemy["moves"]))
                 await client.send_message(message.channel, text)

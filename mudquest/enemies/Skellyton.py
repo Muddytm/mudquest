@@ -18,7 +18,7 @@ class Skellyton:
         self.moves = ["Stare", "Bone Toss", "Super Mega Ultra Bone Toss",
                       "Boned-Aid"]
 
-    def act(roll):
+    def act(self, roll):
         """Perform an action based on random roll from 0 to 99.
 
         return: (text, damage, self_damage, self_heal, miss_chance)"""
