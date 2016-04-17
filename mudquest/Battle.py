@@ -79,7 +79,7 @@ class Battle:
             if ability_data[1]:
                 if ability_data[4]:
                     roll = random.randint(0, 99)
-                    if roll > ability[4]:
+                    if roll > ability_data[4]:
                         Game.hero["HP"] -= ability_data[1]
                         dmg_text = (Game.name + " took "
                                     "" + str(ability_data[1]) + " damage!")
@@ -95,7 +95,7 @@ class Battle:
             elif ability_data[3]:
                 if ability_data[4]:
                     roll = random.randint(0, 99)
-                    if roll > ability[4]:
+                    if roll > ability_data[4]:
                         Game.enemy["HP"] += ability_data[3]
                         heal_text = (Game.enemy["name"] + " healed for "
                                      "" + str(ability_data[3]) + " HP!")
