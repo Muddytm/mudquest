@@ -11,9 +11,14 @@ class Skellyton:
                             "however.")
         self.battle_text = ("You feel a spooky presence descend upon you..."
                             "a wild skellyton appears!")
+        self.death_text = ("The skellyton whispers one last \"doot doot\" "
+                           "before falling into a pile of bones. He\'s not "
+                           "dead though...just unorganized for a bit.")
         self.HP = 20
+        self.moves = ["Stare", "Bone Toss", "Super Mega Ultra Bone Toss",
+                      "Boned-Aid"]
 
-    def fight(roll):
+    def act(roll):
         """Perform an action based on random roll from 0 to 99.
 
         return: (text, damage, self_damage, self_heal, miss_chance)"""
@@ -21,19 +26,19 @@ class Skellyton:
             text = ("The skellyton stares at you with eyes wide open. That "
                     "should be obvious, though. It\'s a skellyton.")
             damage = 0
-            return [text, 0, 0, 0, 0]
+            return [text, None, None, None, None]
         elif roll < 70:
             text = ("The skellyton throws a bone at you.")
             damage = 5
             miss_chance = 30
-            return [text, damage, 0, 0, miss_chance]
+            return [text, damage, None, None, miss_chance]
         elif roll < 80:
             text = ("The skellyton tries to throw a bone at you but trips over "
                     "itself. Silly skellyton!")
             self_damage = 2
-            return [text, 0, self_damage, 0, 0]
+            return [text, None, self_damage, None, None]
         elif roll < 100:
             text = ("The skellyton sticks more bones to itself with duct tape.")
             self_heal = 4
             miss_chance = 10  # lol
-            return [text, 0, 0, self_heal, miss_chance]
+            return [text, None, None, self_heal, miss_chance]

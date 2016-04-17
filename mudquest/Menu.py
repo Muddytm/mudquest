@@ -15,9 +15,9 @@ class Menu:
         if msg == "new":
             Game.state = "battle"
             Game.name = message.author.name
-            Game.path = "simpleton"
+            Game.role = "simpleton"
 
-            await client.send_message(message.channel, "Your class is: simpleton")
+            await client.send_message(message.channel, "Your class is: " + Game.role)
 
         # !mudrpg load
         elif msg == "load":

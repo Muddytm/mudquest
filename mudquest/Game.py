@@ -11,7 +11,7 @@ class Game:
         self.state = "menu"
         self.running = False
         self.name = None
-        self.path = None
+        self.role = None
         self.enemy = {}
         self.hero = {}
         self.turn = None
