@@ -19,13 +19,11 @@ class Battle:
         Game.enemy["HP"] = enemy.HP
         Game.enemy["moves"] = enemy.moves
 
-
     def make_hero(self, hero, Game):
         """Populate enemy dict with enemy data."""
         Game.hero["name"] = hero.name
         Game.hero["description"] = hero.description
         Game.hero["HP"] = hero.HP
-
 
     async def main(self, Game, client, message):
         """Hub of actions for turn-based battle."""
