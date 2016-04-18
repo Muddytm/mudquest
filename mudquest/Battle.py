@@ -51,8 +51,9 @@ class Battle:
                 await client.send_message(message.channel, text)
                 text = ("HP: " + str(Game.enemy["HP"]))
                 await client.send_message(message.channel, text)
-                text = ("Moves: " + str(Game.enemy["moves"]))
+                text = ("Moves: " + (", ".join(Game.enemy["moves"])))
                 await client.send_message(message.channel, text)
+
             elif msg == "punch":
                 ability_data = Simpleton().act("punch")
                 await client.send_message(message.channel, ability_data[0])
@@ -87,6 +88,8 @@ class Battle:
                                    "" + str(Game.hero["HP"]) + " HP.")
                         await client.send_message(message.channel, dmg_text)
                         await client.send_message(message.channel, hp_text)
+                    else:
+                        await client.send_message(message.channel, "...missed!")
             elif ability_data[2]:
                 Game.enemy["HP"] -= ability_data[2]
                 self_dmg_text = (Game.enemy["name"] + " took "
@@ -100,6 +103,8 @@ class Battle:
                         heal_text = (Game.enemy["name"] + " healed for "
                                      "" + str(ability_data[3]) + " HP!")
                         await client.send_message(message.channel, heal_text)
+                    else:
+                        await client.send_message(message.channel, "...missed!")
 
         Game.turn = "hero"
 
