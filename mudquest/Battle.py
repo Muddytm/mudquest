@@ -28,8 +28,6 @@ class Battle:
     async def main(self, Game, client, message):
         """Hub of actions for turn-based battle."""
 
-        msg = message.content
-
         if Game.enemy == {}:
             self.make_enemy(Skellyton(), Game)
             Game.turn = "hero"
@@ -44,17 +42,15 @@ class Battle:
     async def cycle(self, Game, client, message):
         """Battle "cycle" that happens every full turn."""
 
+        msg = message.content
+
         if Game.turn == "hero":
             if msg == "check":
-                text = ("Studying the " + Game.enemy["name"] + "...")
-                await client.send_message(message.channel, text)
-                text = ("Name: " + Game.enemy["name"])
-                await client.send_message(message.channel, text)
-                text = ("Lore: " + Game.enemy["description"])
-                await client.send_message(message.channel, text)
-                text = ("HP: " + str(Game.enemy["HP"]))
-                await client.send_message(message.channel, text)
-                text = ("Moves: " + (", ".join(Game.enemy["moves"])))
+                text = ("Studying the " + Game.enemy["name"] + "...\n")
+                text += ("Name: " + Game.enemy["name"] + "\n")
+                text += ("Lore: " + Game.enemy["description"] + "\n")
+                text += ("HP: " + str(Game.enemy["HP"]) + "\n")
+                text += ("Moves: " + (", ".join(Game.enemy["moves"])))
                 await client.send_message(message.channel, text)
 
             elif msg == "punch":
@@ -68,8 +64,8 @@ class Battle:
                                 "" + str(ability_data[1]) + " damage!")
                     hp_text = (Game.enemy["name"] + " now has "
                                "" + str(Game.enemy["HP"]) + " HP.")
-                    await client.send_message(message.channel, dmg_text)
-                    await client.send_message(message.channel, hp_text)
+                    text = (dmg_text + "\n" + hp_text)
+                    await client.send_message(message.channel, text)
                 else:
                     await client.send_message(message.channel, "...missed!")
 
@@ -89,15 +85,18 @@ class Battle:
                                     "" + str(ability_data[1]) + " damage!")
                         hp_text = (Game.name + " now has "
                                    "" + str(Game.hero["HP"]) + " HP.")
-                        await client.send_message(message.channel, dmg_text)
-                        await client.send_message(message.channel, hp_text)
+                        text = (dmg_text + "\n" + hp_text)
+                        await client.send_message(message.channel, text)
                     else:
                         await client.send_message(message.channel, "...missed!")
             elif ability_data[2]:
                 Game.enemy["HP"] -= ability_data[2]
                 self_dmg_text = (Game.enemy["name"] + " took "
                                  "" + str(ability_data[2]) + " damage!")
-                await client.send_message(message.channel, self_dmg_text)
+                hp_text = (Game.enemy["name"] + " now has "
+                           "" + str(Game.enemy["HP"]) + " HP.")
+                text = (self_dmg_text + "\n" + hp_text)
+                await client.send_message(message.channel, text)
             elif ability_data[3]:
                 if ability_data[4]:
                     roll = random.randint(0, 99)
@@ -105,10 +104,32 @@ class Battle:
                         Game.enemy["HP"] += ability_data[3]
                         heal_text = (Game.enemy["name"] + " healed for "
                                      "" + str(ability_data[3]) + " HP!")
-                        await client.send_message(message.channel, heal_text)
+                        hp_text = (Game.enemy["name"] + " now has "
+                                   "" + str(Game.enemy["HP"]) + " HP.")
+                        text = (heal_text + "\n" + hp_text)
+                        await client.send_message(message.channel, text)
                     else:
                         await client.send_message(message.channel, "...missed!")
 
         Game.turn = "hero"
 
-        await client.send_message(message.channel, "" + Game.name + "\'s turn.")
+        if Game.hero["HP"] > 0 and Game.enemy["HP"] > 0:
+            await client.send_message(message.channel, "" + Game.name + "\'s turn.")
+        elif Game.hero["HP"] <= 0:
+            text = ("" + Game.enemy["name"] + " is triumphant!\n")
+            text += ("Restarting...done")
+            await client.send_message(message.channel, text)
+            self.make_enemy(Skellyton(), Game)
+            self.make_hero(Simpleton(), Game)
+            Game.turn = "hero"
+            await client.send_message(message.channel,
+                                      Game.enemy["battle_text"])
+        elif Game.enemy["HP"] <= 0:
+            text = ("" + Game.name + " is triumphant!\n")
+            text += ("Restarting...done")
+            await client.send_message(message.channel, text)
+            self.make_enemy(Skellyton(), Game)
+            self.make_hero(Simpleton(), Game)
+            Game.turn = "hero"
+            await client.send_message(message.channel,
+                                      Game.enemy["battle_text"])
