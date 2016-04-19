@@ -39,6 +39,11 @@ class Battle:
         if Game.hero == {}:
             self.make_hero(Simpleton(), Game)
 
+        self.cycle(Game, client, message)
+
+    async def cycle(self, Game, client, message):
+        """Battle "cycle" that happens every full turn."""
+
         if Game.turn == "hero":
             if msg == "check":
                 text = ("Studying the " + Game.enemy["name"] + "...")
